@@ -1,6 +1,6 @@
 const express = require('express');
 const userModel = require('../Models/UserModel');
-const emailSender = require('../EmailSender');
+// const emailSender = require('../EmailSender');
 const route = express.Router();
 
 route.post('/loginUser',async(req,res)=>{
@@ -70,7 +70,7 @@ route.post('/sendQueryEmail',(req,res)=>{
                 btnLink: `mailTo:${userEmail}`,
                 headingText: `Hey admin got a query from ${userName} !!`
         }
-        emailSender(emailOptions) ;
+        // emailSender(emailOptions) ;
         res.json({message:"success"});
     } catch (error) {
         res.status(500).json({message:"internal server error"})

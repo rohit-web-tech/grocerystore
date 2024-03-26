@@ -4,7 +4,7 @@ const crypto = require('crypto');
 const orderModel = require('../Models/OrderModel');
 const cartModel = require('../Models/CartModel');
 const route = express.Router();
-const emailSender = require('../EmailSender');
+// const emailSender = require('../EmailSender');
 const userModel = require('../Models/UserModel')
 
 route.post('/cartPayments', async (req, res) => {
@@ -70,26 +70,26 @@ route.post('/paymentVerification', async (req, res) => {
             const newCartItems = await cartModel.find({ userId });
             const user = await userModel.findOne({ _id: userId });
             console.log(user)
-            let userEmailOptions = {
-                sendTo: user.userEmail,
-                subject: "Thanks for placing order!",
-                mainText: `Hello ${user.userName}\nYour order has been placed and currently being processed.It will be delievered to you shortly`,
-                cName: user.userName,
-                btnText: "View Order",
-                btnLink: "http://localhost:5173/user",
-                headingText: `Hey ${user.userName} thanks for placing the order !!`
-            }
-            let adminEmailOptions = {
-                sendTo: process.env.myEmail,
-                subject: "Got a new order!",
-                mainText: `We got a new order from ${user.userName} contact number : ${user.userContact} Email id : ${user.userEmail} Address : ${user.userAddress} of ${amount/100} Rupees with payment id : ${razorpay_payment_id}.For more details click below button : `,
-                cName: "Admin",
-                btnText: "View Order",
-                btnLink: "http://localhost:5173/user",
-                headingText: `Hey Admin Got A New Order From ${user.userName}!!`
-            }
-            emailSender(userEmailOptions);
-            emailSender(adminEmailOptions);
+            // let userEmailOptions = {
+            //     sendTo: user.userEmail,
+            //     subject: "Thanks for placing order!",
+            //     mainText: `Hello ${user.userName}\nYour order has been placed and currently being processed.It will be delievered to you shortly`,
+            //     cName: user.userName,
+            //     btnText: "View Order",
+            //     btnLink: "http://localhost:5173/user",
+            //     headingText: `Hey ${user.userName} thanks for placing the order !!`
+            // }
+            // let adminEmailOptions = {
+            //     sendTo: process.env.myEmail,
+            //     subject: "Got a new order!",
+            //     mainText: `We got a new order from ${user.userName} contact number : ${user.userContact} Email id : ${user.userEmail} Address : ${user.userAddress} of ${amount/100} Rupees with payment id : ${razorpay_payment_id}.For more details click below button : `,
+            //     cName: "Admin",
+            //     btnText: "View Order",
+            //     btnLink: "http://localhost:5173/user",
+            //     headingText: `Hey Admin Got A New Order From ${user.userName}!!`
+            // }
+            // emailSender(userEmailOptions);
+            // emailSender(adminEmailOptions);
                 res.json({ success: true, message: "Payment has been verified", paymentId: razorpay_payment_id, newCartItems })
         }
         else
