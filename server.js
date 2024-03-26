@@ -22,6 +22,9 @@ app.get('/',(req,res)=>{
     res.send("This is Rohit's server!!")
 })
 
+app.get("/rohit",(req,res)=>{
+    res.send("Hi from rohit!!");
+})
 
 app.listen(8800,()=>{
     console.log("server is running on port 8800 !!") ;
