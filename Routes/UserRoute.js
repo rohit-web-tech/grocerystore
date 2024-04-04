@@ -1,13 +1,12 @@
 const express = require('express');
 const userModel = require('../Models/UserModel');
-// const emailSender = require('../EmailSender');
+const adminModel = require('../Models/AdminModel')
 const route = express.Router();
 
 route.post('/loginUser',async(req,res)=>{
     const {email,password} = req.body.params ;
     try {
         const user = await userModel.find({userEmail:email});
-        console.log(user)
         if(user.length>0){
             if(user[0].userPassword===password){
                 res.json({"message":"success",user});
@@ -39,7 +38,6 @@ route.post('/registerUser',async(req,res)=>{
             res.json({"message":"success",data})
         }
     } catch (error) {
-        console.log(error)
         res.status(400).json({"message":"internal server error"});
     }
 })
@@ -48,7 +46,6 @@ route.post('/updateUserProfile',async(req,res)=>{
     const{userDetails} = req.body.params;
     try {
         const {userName,userContact,userEmail,userAddress}=userDetails;
-        console.log(userDetails);
         let user = await userModel.findOne({_id:userDetails._id});
         user.userName=userName,user.userAddress=userAddress,user.userContact=userContact;
         await user.save();
@@ -74,6 +71,20 @@ route.post('/sendQueryEmail',(req,res)=>{
         res.json({message:"success"});
     } catch (error) {
         res.status(500).json({message:"internal server error"})
+    }
+})
+
+route.post("/loginAdmin",async(req,res)=>{
+    const {adminDetails} = req.body ;
+    try {
+        const admin = await adminModel.findOne({});
+        if(admin.userName != adminDetails.userName && admin.password != adminDetails.password){
+            res.json({"message":"Please login with right credentials!!"})
+        }else{
+            res.json({"message":"success"})
+        }
+    } catch (error) {
+        res.status(500).json({"message":"internal server error"})
     }
 })
 

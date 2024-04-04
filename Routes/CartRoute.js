@@ -27,7 +27,6 @@ route.post('/addToCart',async(req,res)=>{
 
 route.post('/getCartData',async(req,res)=>{
     const {userId} = req.body.params ;
-    console.log(userId)
     try {
         const cartItems = await cartModel.find({userId});
         res.json({'message':"success",cartItems});
@@ -38,7 +37,6 @@ route.post('/getCartData',async(req,res)=>{
 
 route.post('/removeItemFromCart',async(req,res)=>{
     const {itemId,userId} = req.body.params ;
-    console.log(itemId)
     try {
         await cartModel.deleteOne({_id:itemId});
         const cartItems = await cartModel.find({userId})
